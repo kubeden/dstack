@@ -1,0 +1,16 @@
+# ACK is a multi-controller wrapper chart. Leave controllers disabled by
+# default, then enable only the AWS services this cluster should reconcile.
+iam:
+  enabled: false
+
+s3:
+  enabled: false
+
+ecr:
+  enabled: false
+
+route53:
+  enabled: false
+
+secretsmanager:
+  enabled: false

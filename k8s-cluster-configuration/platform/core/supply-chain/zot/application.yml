@@ -6,9 +6,8 @@ metadata:
 spec:
   project: default
   source:
-    repoURL: https://github.com/kubeden/kubeden.git
     targetRevision: main
-    path: k8s-cluster-configuration/platform/core/zot/base
+    path: k8s-cluster-configuration/platform/core/supply-chain/zot/base
   destination:
     server: https://kubernetes.default.svc
     namespace: zot

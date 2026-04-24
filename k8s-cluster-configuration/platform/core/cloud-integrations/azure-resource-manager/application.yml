@@ -1,0 +1,17 @@
+apiVersion: argoproj.io/v1alpha1
+kind: Application
+metadata:
+  name: azure-resource-manager
+  namespace: argocd
+spec:
+  project: default
+  source:
+    targetRevision: main
+    path: k8s-cluster-configuration/platform/core/cloud-integrations/azure-resource-manager/base
+  destination:
+    server: https://kubernetes.default.svc
+    namespace: azureserviceoperator-system
+  syncPolicy:
+    syncOptions:
+      - CreateNamespace=true
+      - ServerSideApply=true

@@ -1,0 +1,18 @@
+defaultSettings:
+  defaultDataPath: /var/lib/longhorn
+  replicaSoftAntiAffinity: true
+  storageOverProvisioningPercentage: 200
+  storageMinimalAvailablePercentage: 25
+
+longhornManager:
+  resources:
+    requests:
+      cpu: 50m
+      memory: 128Mi
+
+longhornUI:
+  replicas: 1
+
+metrics:
+  serviceMonitor:
+    enabled: false

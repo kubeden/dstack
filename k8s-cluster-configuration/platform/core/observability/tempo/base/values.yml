@@ -1,0 +1,16 @@
+replicas: 1
+
+tempo:
+  reportingEnabled: false
+  retention: 24h
+  resources:
+    requests:
+      cpu: 50m
+      memory: 256Mi
+
+persistence:
+  enabled: true
+  size: 10Gi
+
+serviceMonitor:
+  enabled: false

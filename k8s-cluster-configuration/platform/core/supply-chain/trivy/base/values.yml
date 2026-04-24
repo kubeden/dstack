@@ -1,0 +1,16 @@
+targetNamespaces: ""
+excludeNamespaces: "kube-system,trivy-system"
+
+operator:
+  replicas: 1
+
+trivy:
+  ignoreUnfixed: true
+
+resources:
+  requests:
+    cpu: 50m
+    memory: 128Mi
+
+serviceMonitor:
+  enabled: false

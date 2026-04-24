@@ -1,0 +1,34 @@
+crds:
+  install: true
+
+operator:
+  replicaCount: 1
+
+metricsServer:
+  replicaCount: 1
+
+webhooks:
+  enabled: true
+  replicaCount: 1
+
+resources:
+  operator:
+    requests:
+      cpu: 50m
+      memory: 128Mi
+  metricServer:
+    requests:
+      cpu: 50m
+      memory: 128Mi
+  webhooks:
+    requests:
+      cpu: 10m
+      memory: 64Mi
+
+prometheus:
+  operator:
+    enabled: false
+  metricServer:
+    enabled: false
+  webhooks:
+    enabled: false

@@ -1,0 +1,24 @@
+createAzureOperatorSecret: false
+installCRDs: true
+
+# ASO installs only selected CRD groups. Keep the bootstrap footprint small
+# and extend this list when Azure services are introduced.
+crdPattern:
+  - resources.azure.com/*
+
+useWorkloadIdentityAuth: true
+
+# Fill these through an overlay or sealed secret before enabling in a cluster.
+azureTenantID: ""
+azureSubscriptionID: ""
+azureClientID: ""
+
+replicaCount: 1
+
+resources:
+  requests:
+    cpu: 50m
+    memory: 128Mi
+  limits:
+    cpu: 500m
+    memory: 512Mi

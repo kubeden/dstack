@@ -6,11 +6,10 @@ metadata:
 spec:
   project: default
   source:
-    repoURL: https://github.com/kubeden/kubeden.git
     targetRevision: main
     # Single source dir inflates BOTH the velero server (core/) and
     # velero-ui (ui/) helm charts via the top-level kustomization.
-    path: k8s-cluster-configuration/platform/core/velero
+    path: k8s-cluster-configuration/platform/core/data-management/velero
   destination:
     server: https://kubernetes.default.svc
     # The helm charts declare their own namespaces (velero and velero-ui);

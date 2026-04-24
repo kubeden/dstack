@@ -6,9 +6,8 @@ metadata:
 spec:
   project: default
   source:
-    repoURL: https://github.com/kubeden/kubeden.git
     targetRevision: main
-    path: k8s-cluster-configuration/platform/core/cert-manager/base
+    path: k8s-cluster-configuration/platform/core/routing/cert-manager/base
   destination:
     server: https://kubernetes.default.svc
     namespace: cert-manager

@@ -1,0 +1,5 @@
+# Optional placeholder for Azure Service Operator credentials.
+#
+# The base values are configured for Azure Workload Identity and do not
+# reference this file. If you switch to client secret authentication, add a
+# SealedSecret here and include it from base/kustomization.yml.
