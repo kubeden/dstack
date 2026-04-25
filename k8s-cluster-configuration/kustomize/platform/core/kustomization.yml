@@ -9,7 +9,8 @@ labels:
 resources:
   - meta
 
-# Bare minimum
+# Bare minimum platform baseline.
+# Optional components below are available but deliberately disabled by default.
   - components/routing/traefik/application.yml
   - components/routing/cert-manager/application.yml
   - components/routing/external-dns/application.yaml

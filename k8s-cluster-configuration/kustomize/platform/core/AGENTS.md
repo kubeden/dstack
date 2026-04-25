@@ -4,6 +4,8 @@ This is the shared cluster services layer.
 
 - Use `kustomization.yml` as the only enable/disable switch for components.
 - Keep the bare-minimum enabled set small unless the user asks to expand it.
+- Treat commented components as available opt-in platform capabilities, not
+  unfinished code.
 - Add new services under `components/<category>/<name>/`.
 - Each component should expose an Argo CD `application.yml` and keep deployable
   resources in `base/`.
@@ -13,4 +15,3 @@ This is the shared cluster services layer.
   Argo CD source/destination fields into child Applications.
 - When copying a component, update the Argo CD name, destination namespace,
   source path, Helm release name, chart values, and any secret names.
-

@@ -5,7 +5,11 @@ apps depend on, not product/customer workloads.
 
 `kustomization.yml` is the switchboard. Uncomment a component `application.yml`
 to let Argo CD manage it. The enabled set is intentionally small: routing,
-certificates, DNS, sealed secrets, config reloads, registry, and policies.
+certificates, DNS, sealed secrets, config reloads, and policies.
+
+Optional components are included as ready patterns, not enabled defaults. Turn
+them on per environment when you need observability, backup, autoscaling,
+supply-chain security, storage, or cloud integrations.
 
 ## Components
 
@@ -61,4 +65,3 @@ Create `components/<category>/<name>/application.yml` and
 `components/<category>/<name>/base/kustomization.yml`, then add the application
 to `kustomization.yml`. Keep chart values and component manifests inside
 `base/`.
-

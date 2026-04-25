@@ -3,6 +3,9 @@
 This directory is the infrastructure layer. It provisions cloud resources only;
 Kubernetes platform configuration lives under `k8s-cluster-configuration`.
 
+The modules are written to support production-oriented settings. The checked-in
+provider stacks stay minimal and cost-conscious so they are usable examples.
+
 ## Layout
 
 ```text
@@ -57,4 +60,3 @@ Run from a specific provider stack directory:
 terraform init -backend=false
 terraform validate
 ```
-

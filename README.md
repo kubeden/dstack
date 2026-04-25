@@ -5,9 +5,12 @@
 DStack is a Kubernetes platform template split into two logical processes:
 
 1. **Provisioning** with IaC (Terraform).
-2. **Configuration** with GitOps (ArgoCD).
+2. **Configuration** with GitOps (Argo CD).
 
-DStack serves as the perfect ground base for a stable, highly-available & scalable container platform.
+DStack is a practical starter template for building a stable, highly-available,
+and scalable container platform.
+
+> DStack is a starter template, not a production platform distribution; production hardening should be applied per environment.
 
 > TIP: Send this repository to your AI agent & discuss!
 
@@ -23,6 +26,8 @@ Use it only to provision cloud resources:
 - initial Argo CD Helm bootstrap
 
 It should not own ongoing Kubernetes platform configuration.
+The Terraform modules support production-oriented configuration, but the example
+provider stacks are deliberately minimal and cost-conscious.
 
 ```text
 infrastructure/terraform/
@@ -40,6 +45,11 @@ Use it only to configure Kubernetes resources:
 - platform components
 - cluster policies
 - workload Applications
+
+The platform includes additional optional components for observability, backup,
+autoscaling, supply-chain security, storage, and cloud integrations. They are
+commented out by default so the baseline stays small; enable them per
+environment as needed.
 
 ```text
 k8s-cluster-configuration/kustomize/

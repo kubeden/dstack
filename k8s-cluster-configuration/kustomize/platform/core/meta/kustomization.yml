@@ -5,7 +5,7 @@ configMapGenerator:
   - name: platform-core-source
     literals:
       - appOfAppsName=kubeden-cluster-apps
-      - repoURL=https://github.com/kubeden/kubeden.git
+      - repoURL=https://github.com/kubeden/dstack.git
       - targetRevision=main
       - destinationServer=https://kubernetes.default.svc
     options:

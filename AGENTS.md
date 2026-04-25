@@ -7,6 +7,9 @@ DStack is split into two responsibilities:
 
 Keep that boundary intact.
 
+DStack is a starter template, not a production platform distribution.
+Production hardening should be applied per environment.
+
 ## IaC
 
 Terraform lives in `infrastructure/terraform`.
@@ -16,6 +19,8 @@ Terraform lives in `infrastructure/terraform`.
 - Put deployable stacks in `providers/<provider>/<region>/<stack>`.
 - Keep provider stacks small: `locals.tf`, `provider.tf`, `main.tf`, `outputs.tf`.
 - Do not make Terraform own Argo CD self-management, platform app-of-apps, or workloads.
+- Terraform modules may support production-oriented settings, but example
+  provider stacks should stay minimal and cost-conscious unless asked otherwise.
 
 ## GitOps
 
@@ -26,6 +31,9 @@ Kustomize lives in `k8s-cluster-configuration/kustomize`.
 - Put product/customer workloads under `applications`.
 - Preserve the app-of-apps pattern.
 - Keep raw credentials out of manifests; use sealed or external secrets.
+- Keep the default platform baseline small. Optional commented components are
+  available for observability, backup, autoscaling, supply-chain security,
+  storage, and cloud integrations.
 
 ## Checks
 
@@ -34,4 +42,3 @@ terraform fmt -check -recursive infrastructure/terraform
 kustomize build k8s-cluster-configuration/kustomize/platform/core
 kustomize build k8s-cluster-configuration/kustomize/applications
 ```
-

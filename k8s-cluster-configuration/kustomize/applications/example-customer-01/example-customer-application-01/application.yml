@@ -6,7 +6,7 @@ metadata:
 spec:
   project: default
   source:
-    repoURL: https://github.com/kubeden/kubeden.git
+    repoURL: https://github.com/kubeden/dstack.git
     targetRevision: main
     path: k8s-cluster-configuration/kustomize/applications/example-customer-01/example-customer-application-01/base
   destination:
