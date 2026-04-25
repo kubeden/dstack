@@ -1,96 +1,53 @@
-# Kubeden Infrastructure
+# <img src="https://unavatar.io/x/kuberdenis" width="20"/> DStack
 
-Infrastructure and GitOps configuration for the Kubeden Kubernetes environment.
+![the-dstack](./assets/the-dstack.png)
 
-The repository has two main parts:
+DStack is a GitOps infra template. It contains cleanly written IaC+GitOps code to help you get your container platform up and running in a day, and serve as a base point for good DevOps practices & enable you to build on top of it, easily.
 
-- `infrastructure/terraform`: provisions the cluster infrastructure and bootstraps k3s.
-- `k8s-cluster-configuration/kustomize`: defines the cluster state managed by Argo CD.
+## Repository Contents
 
-## Repository Layout
+The repository contains two entrypoints:
 
-```text
-infrastructure/
-  terraform/
-    modules/
-      hetzner/personal/k3s/   # Hetzner servers, network, firewalls
-      k3s/bootstrap/          # k3s installation/bootstrap
-    providers/
-      hetzner/weu/prd/k3s/    # production Hetzner cluster stack
-      hetzner/weu/prd/k3s-bootstrap/
+**- infrastructure:** your IaC store; the place where you should only provision infrastructure
+**- k8s-cluster-configuration:** your GitOps store; the place where you should configure your container platform
 
-k8s-cluster-configuration/
-  kustomize/
-    platform/
-      argocd/                 # Argo CD installation/self-management
-      core/                   # platform app-of-apps and shared services
-    applications/             # example workload app-of-apps pattern
-```
+There are Terraform templates for Azure, AWS, GCP, Hetzner, and DigitalOcean.
 
-## How It Works
+## /infrastructure
 
-Terraform creates the cluster infrastructure first. The bootstrap stack installs
-k3s on the provisioned nodes.
+The `/infrastructure` directory contains two paths inside `/terraform`: modules & providers. It uses a standard Terraform modules-first approach.
 
-After that, Argo CD owns the Kubernetes configuration:
+## /k8s-cluster-configuration
 
-- `platform/argocd` installs or self-manages Argo CD.
-- `platform/core` manages shared platform components such as Traefik,
-  cert-manager, external-dns, sealed-secrets, reloader, zot, and Kyverno.
-- `applications` is the pattern for product/customer workload Applications.
+The `/k8s-cluster-configuration` directory contains two paths under `/kustomize`: applications & platform. The `platform` directory is where all platform components live. It uses an `app-of-apps` pattern + kustomize for readibility & ease of maintainability (and customisation).
 
-The platform core Kustomization intentionally enables only the bare minimum.
-Additional components are present but commented out until needed.
+The package of platform components it comes by default with is as follows:
 
-## Requirements
+- traefik
+- cert-manager
+- external-dns
+- sealed-secrets
+- kyverno
+- reloader
 
-- `terraform`
-- `kubectl`
-- `kustomize`
-- `helm`
-- Cloud/provider credentials for the relevant Terraform and Kubernetes tasks
+It contains the following available (but commented out) components:
 
-## Common Workflow
+- external-secrets
+- zot
+- longhorn
+- velero
+- prometheus
+- grafana
+- loki
+- tempo
+- alloy
+- metrics-server
+- keda
+- trivy
+- hcloud-ccm
+- azure-resource-manager
+- aws-ack
 
-1. Provision infrastructure from the relevant Terraform provider stack.
-2. Bootstrap k3s from the matching `k3s-bootstrap` stack.
-3. Apply or sync the Argo CD configuration.
-4. Add platform services in `kustomize/platform/core`.
-5. Add workloads in `kustomize/applications`.
+All of the components available are on the latest version of their helm charts, are locally defined, and allow complete ownership.
 
-Keep secrets sealed or externally managed. Do not commit raw credentials.
-
-## Test Commands
-
-Render the app-of-apps entrypoints:
-
-```sh
-kustomize build k8s-cluster-configuration/kustomize/applications
-kustomize build k8s-cluster-configuration/kustomize/platform/core
-kustomize build --enable-helm k8s-cluster-configuration/kustomize/platform/argocd/base/core
-```
-
-Render the currently enabled platform component bases:
-
-```sh
-kustomize build --enable-helm k8s-cluster-configuration/kustomize/platform/core/components/routing/traefik/base
-kustomize build --enable-helm k8s-cluster-configuration/kustomize/platform/core/components/routing/cert-manager/base
-kustomize build --enable-helm k8s-cluster-configuration/kustomize/platform/core/components/routing/external-dns/base
-kustomize build --enable-helm k8s-cluster-configuration/kustomize/platform/core/components/secrets-management/sealed-secrets/base
-kustomize build --enable-helm k8s-cluster-configuration/kustomize/platform/core/components/resource-management/reloader/base
-kustomize build --enable-helm k8s-cluster-configuration/kustomize/platform/core/components/supply-chain/zot/base
-kustomize build --enable-helm k8s-cluster-configuration/kustomize/platform/core/components/policies/kyverno/base
-```
-
-Render the example application bases:
-
-```sh
-kustomize build k8s-cluster-configuration/kustomize/applications/company-applications/example-application-01/base
-kustomize build k8s-cluster-configuration/kustomize/applications/company-applications/example-application-02/base
-kustomize build k8s-cluster-configuration/kustomize/applications/example-customer-01/example-customer-application-01/base
-kustomize build k8s-cluster-configuration/kustomize/applications/example-customer-01/example-customer-application-02/base
-```
-
-These commands verify Kustomize/Helm rendering. They do not replace API-server
-validation or a real Argo CD sync.
-
+## How to use
