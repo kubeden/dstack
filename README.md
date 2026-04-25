@@ -1,4 +1,4 @@
-# <img src="https://unavatar.io/x/kuberdenis" width="20"/> DStack
+# DStack
 
 ![the-dstack](./assets/the-dstack.png)
 
