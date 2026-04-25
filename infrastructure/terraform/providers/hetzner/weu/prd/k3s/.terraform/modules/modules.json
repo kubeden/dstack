@@ -1,1 +1,0 @@
-{"Modules":[{"Key":"","Source":"","Dir":"."},{"Key":"k3s","Source":"../../../../../modules/hetzner/personal/k3s","Dir":"../../../../../modules/hetzner/personal/k3s"},{"Key":"k3s_bootstrap","Source":"../../../../../modules/k3s/bootstrap","Dir":"../../../../../modules/k3s/bootstrap"}]}

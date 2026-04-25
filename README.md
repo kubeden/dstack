@@ -2,52 +2,71 @@
 
 ![the-dstack](./assets/the-dstack.png)
 
-DStack is a GitOps infra template. It contains cleanly written IaC+GitOps code to help you get your container platform up and running in a day, and serve as a base point for good DevOps practices & enable you to build on top of it, easily.
+DStack is a Kubernetes platform template split into two logical processes:
 
-## Repository Contents
+1. **Provisioning** with IaC (Terraform).
+2. **Configuration** with GitOps (ArgoCD).
 
-The repository contains two entrypoints:
+DStack serves as the perfect ground base for a stable, highly-available & scalable container platform.
 
-**- infrastructure:** your IaC store; the place where you should only provision infrastructure
-**- k8s-cluster-configuration:** your GitOps store; the place where you should configure your container platform
+> TIP: Send this repository to your AI agent & discuss!
 
-There are Terraform templates for Azure, AWS, GCP, Hetzner, and DigitalOcean.
+## 1. IaC
 
-## /infrastructure
+IaC lives in `infrastructure/terraform`.
 
-The `/infrastructure` directory contains two paths inside `/terraform`: modules & providers. It uses a standard Terraform modules-first approach.
+Use it only to provision cloud resources:
 
-## /k8s-cluster-configuration
+- remote state resources
+- networks
+- Kubernetes clusters
+- initial Argo CD Helm bootstrap
 
-The `/k8s-cluster-configuration` directory contains two paths under `/kustomize`: applications & platform. The `platform` directory is where all platform components live. It uses an `app-of-apps` pattern + kustomize for readibility & ease of maintainability (and customisation).
+It should not own ongoing Kubernetes platform configuration.
 
-The package of platform components it comes by default with is as follows:
+```text
+infrastructure/terraform/
+  modules/      # reusable Terraform modules
+  providers/    # deployable cloud stacks
+```
 
-- traefik
-- cert-manager
-- external-dns
-- sealed-secrets
-- kyverno
-- reloader
+## 2. GitOps
 
-It contains the following available (but commented out) components:
+GitOps lives in `k8s-cluster-configuration/kustomize`.
 
-- external-secrets
-- zot
-- longhorn
-- velero
-- prometheus
-- grafana
-- loki
-- tempo
-- alloy
-- metrics-server
-- keda
-- trivy
-- hcloud-ccm
-- azure-resource-manager
-- aws-ack
+Use it only to configure Kubernetes resources:
 
-All of the components available are on the latest version of their helm charts, are locally defined, and allow complete ownership.
+- Argo CD self-management
+- platform components
+- cluster policies
+- workload Applications
 
-## How to use
+```text
+k8s-cluster-configuration/kustomize/
+  platform/     # Argo CD and shared platform components
+  applications/ # workload Application examples
+```
+
+## Flow
+
+1. Apply the cloud `common` Terraform stack.
+2. Apply the cluster Terraform stack: `eks`, `aks`, etc.
+3. Apply the matching `*-argocd` Terraform stack.
+4. Use GitOps to configure Argo CD, platform, and workloads.
+
+## Checks
+
+```sh
+terraform fmt -check -recursive infrastructure/terraform
+
+kustomize build k8s-cluster-configuration/kustomize/applications
+kustomize build k8s-cluster-configuration/kustomize/platform/core
+kustomize build --enable-helm k8s-cluster-configuration/kustomize/platform/argocd/base/core
+```
+
+Run Terraform validation from a specific stack directory:
+
+```sh
+terraform init -backend=false
+terraform validate
+```
