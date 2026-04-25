@@ -1,0 +1,101 @@
+apiVersion: kustomize.config.k8s.io/v1beta1
+kind: Kustomization
+
+labels:
+  - includeSelectors: false
+    pairs:
+      argocd.argoproj.io/instance: kubeden-cluster-apps
+
+resources:
+  - meta
+
+# Bare minimum
+  - components/routing/traefik/application.yml
+  - components/routing/cert-manager/application.yml
+  - components/routing/external-dns/application.yaml
+  - components/secrets-management/sealed-secrets/application.yml
+  - components/resource-management/reloader/application.yml
+  - components/supply-chain/zot/application.yml
+  - components/policies/kyverno/application.yml
+  
+  # - components/secrets-management/external-secrets/application.yml
+
+  # - components/cloud-integrations/hcloud-ccm/application.yml
+  # - components/cloud-integrations/azure-resource-manager/application.yml
+  # - components/cloud-integrations/aws-ack/application.yml
+  
+  # - components/data-management/longhorn/application.yml
+  # - components/data-management/velero/application.yml
+  
+  # - components/observability/prometheus/application.yml
+  # - components/observability/grafana/application.yml
+  # - components/observability/loki/application.yml
+  # - components/observability/tempo/application.yml
+  # - components/observability/alloy/application.yml
+  
+  # - components/resource-management/metrics-server/application.yml
+  # - components/resource-management/keda/application.yml
+  
+  # - components/supply-chain/trivy/application.yml
+
+#############################
+#############################
+#############################
+###  NOT IMPORTANT BELOW  ###
+#############################
+#############################
+#############################
+
+replacements:
+  - source:
+      kind: ConfigMap
+      name: platform-core-source
+      fieldPath: data.appOfAppsName
+    targets:
+      - select:
+          group: argoproj.io
+          version: v1alpha1
+          kind: Application
+        fieldPaths:
+          - metadata.labels.[argocd.argoproj.io/instance]
+        options:
+          create: true
+  - source:
+      kind: ConfigMap
+      name: platform-core-source
+      fieldPath: data.repoURL
+    targets:
+      - select:
+          group: argoproj.io
+          version: v1alpha1
+          kind: Application
+        fieldPaths:
+          - spec.source.repoURL
+        options:
+          create: true
+  - source:
+      kind: ConfigMap
+      name: platform-core-source
+      fieldPath: data.targetRevision
+    targets:
+      - select:
+          group: argoproj.io
+          version: v1alpha1
+          kind: Application
+        fieldPaths:
+          - spec.source.targetRevision
+        options:
+          create: true
+  - source:
+      kind: ConfigMap
+      name: platform-core-source
+      fieldPath: data.destinationServer
+    targets:
+      - select:
+          group: argoproj.io
+          version: v1alpha1
+          kind: Application
+        fieldPaths:
+          - spec.destination.server
+        options:
+          create: true
