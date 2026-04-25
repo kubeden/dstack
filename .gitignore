@@ -1,0 +1,36 @@
+# macOS
+.DS_Store
+
+# Editors
+.idea/
+.vscode/
+*.swp
+*.swo
+
+# Terraform
+**/.terraform/
+*.tfstate
+*.tfstate.*
+crash.log
+crash.*.log
+*.tfplan
+*.tfvars
+*.tfvars.json
+override.tf
+override.tf.json
+*_override.tf
+*_override.tf.json
+
+# Kubernetes / local tooling
+.kube/
+kubeconfig
+*.kubeconfig
+
+# Kustomize Helm chart download cache
+**/charts/
+
+# Logs and temp files
+*.log
+tmp/
+.tmp/
+
