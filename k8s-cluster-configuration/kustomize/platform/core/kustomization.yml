@@ -15,10 +15,10 @@ resources:
   - components/routing/external-dns/application.yaml
   - components/secrets-management/sealed-secrets/application.yml
   - components/resource-management/reloader/application.yml
-  - components/supply-chain/zot/application.yml
   - components/policies/kyverno/application.yml
   
   # - components/secrets-management/external-secrets/application.yml
+  # - components/supply-chain/zot/application.yml
 
   # - components/cloud-integrations/hcloud-ccm/application.yml
   # - components/cloud-integrations/azure-resource-manager/application.yml

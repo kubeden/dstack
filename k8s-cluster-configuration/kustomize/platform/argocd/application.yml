@@ -8,7 +8,7 @@ spec:
   source:
     repoURL: https://github.com/kubeden/kubeden.git
     targetRevision: main
-    path: k8s-cluster-configuration/platform/argocd/base
+    path: k8s-cluster-configuration/kustomize/platform/argocd/base/core
   destination:
     server: https://kubernetes.default.svc
     namespace: argocd

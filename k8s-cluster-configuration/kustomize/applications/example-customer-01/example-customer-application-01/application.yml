@@ -1,17 +1,17 @@
 apiVersion: argoproj.io/v1alpha1
 kind: Application
 metadata:
-  name: txtwrite
+  name: example-customer-application-01
   namespace: argocd
 spec:
   project: default
   source:
     repoURL: https://github.com/kubeden/kubeden.git
     targetRevision: main
-    path: k8s-cluster-configuration/applications/txtwrite/base
+    path: k8s-cluster-configuration/kustomize/applications/example-customer-01/example-customer-application-01/base
   destination:
     server: https://kubernetes.default.svc
-    namespace: txtwrite
+    namespace: example-customer-application-01
   syncPolicy:
     syncOptions:
       - CreateNamespace=true
