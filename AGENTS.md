@@ -7,7 +7,7 @@ DStack is split into two responsibilities:
 
 Keep that boundary intact.
 
-DStack is a starter template, not a production platform distribution.
+DStack is a starter template.
 Production hardening should be applied per environment.
 
 ## IaC
@@ -15,6 +15,10 @@ Production hardening should be applied per environment.
 Terraform lives in `infrastructure/terraform`.
 
 - Use Terraform for remote state, networks, clusters, and Argo CD Helm bootstrap.
+- The application of Terraform should be placed in logically separated directories: 
+  /common for common resources; 
+  /databases for databases; 
+  /aks|eks|k3s for clusters; etc. discuss before applying any code.
 - Put reusable code in `modules/<provider>/<service>`.
 - Put deployable stacks in `providers/<provider>/<region>/<stack>`.
 - Keep provider stacks small: `locals.tf`, `provider.tf`, `main.tf`, `outputs.tf`.
